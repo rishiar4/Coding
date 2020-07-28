@@ -1,0 +1,1 @@
+To Find the sum of the elements in the array.
