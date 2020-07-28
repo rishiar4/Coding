@@ -1,0 +1,1 @@
+To print the numbers till 0 from n in decreasing order.
