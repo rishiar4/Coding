@@ -1,0 +1,1 @@
+To display the contents of array in reverse.
