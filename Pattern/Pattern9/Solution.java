@@ -8,7 +8,7 @@ public class Solution{
         {
             for(int j = 0; j < n; j++)
             {
-                if( i == j )
+                if( i == j || i+j == n-1 )
                 {
                     System.out.print("*\t");
                 }
@@ -17,7 +17,7 @@ public class Solution{
                     System.out.print("\t");
                 }
             }
-            System.out.println()
+            System.out.println();
         }
     }
 }
