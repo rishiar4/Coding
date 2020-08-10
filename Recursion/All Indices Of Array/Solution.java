@@ -10,21 +10,29 @@ public class Solution{
             arr[i] = scn.nextInt();
         }
         int k = scn.nextInt();
-        printIndices( arr, 0 , k );
+        int[] ans = printIndices( arr, 0 , k, 0 );
+        for(int i = 0; i < ans.length; i++ )
+        {
+        System.out.print( ans[i] + " " );
+        }
     }
     
-    public static void printIndices( int[] arr , int index, int k )
+    public static int[] printIndices( int[] arr , int index, int k, int size )
     {
         if( arr.length == index )
         {
-            return;
+            int[] baseAns = new int[size];
+            return baseAns;
         }
         if( arr[ index ] == k  )
         {
-            System.out.println( index );
+            size = size + 1;
         }
-        
-        printIndices( arr, index + 1, k );
-        
+        int[] ans =  printIndices( arr, index + 1, k, size );
+        if( arr[index] == k )
+        {
+            ans[size-1] = index;
+        }
+        return ans;
     }
 }
