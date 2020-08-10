@@ -12,7 +12,7 @@ public class Solution{
         int k = scn.nextInt();
         printIndices( arr, 0 , k );
     }
-
+    
     public static void printIndices( int[] arr , int index, int k )
     {
         if( arr.length == index )
