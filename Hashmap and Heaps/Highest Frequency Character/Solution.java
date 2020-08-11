@@ -14,7 +14,6 @@ public class Solution{
             if( hm.containsKey(ch) == true )
             {
                 int val = hm.get( ch );
-
                 val++;
                 hm.put( ch, val );
             }  
