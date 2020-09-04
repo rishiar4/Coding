@@ -6,14 +6,17 @@
 3. Input and Output is managed for you. Just update the code in addLast function.
 
 ## Sample Input 
+```
 addLast 10
 addLast 20
 addLast 30
 addLast 40
 addLast 50
 quit
+```
 
 ## Sample Output
+```
 10
 20
 30
@@ -21,3 +24,4 @@ quit
 50
 5
 50
+```
