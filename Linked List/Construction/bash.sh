@@ -1,0 +1,1 @@
+javac client.java && java client > output.txt
