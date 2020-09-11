@@ -1,0 +1,6 @@
+[ 100, 200, 450]
+100
+[ 200, 450]
+2
+java.lang.Exception: Null Pointer Exception
+true
