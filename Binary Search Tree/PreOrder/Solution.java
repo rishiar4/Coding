@@ -29,8 +29,8 @@ public class Solution{
         if( root == null ) return;
 
         preOrder( root.left );
-        System.out.print( root.data + " ");
         preOrder( root.right );
+        System.out.print( root.data + " ");
     }
 
     public static void solve()
