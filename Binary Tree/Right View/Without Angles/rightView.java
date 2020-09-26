@@ -31,28 +31,6 @@ public class rightView{
 
     }
 
-    public static class pair{
-        int v = 0;
-        Node node;
-
-        pair( Node node, int v )
-        {
-            this.node = node;
-            this.v = v;
-        }
-    }
-
-    public static void width( Node root, int level, int[] maxMin )
-    {
-        if( root == null ) return;
-
-        maxMin[0] = Math.max( level, maxMin[0] );
-        maxMin[1] = Math.min( level, maxMin[1] );
-
-        width( root.left, level - 1, maxMin );
-        width( root.right, level + 1, maxMin );
-    }
-
     public static ArrayList<Node> rView( Node root )
     {
         ArrayList<Node> ans = new ArrayList<>();

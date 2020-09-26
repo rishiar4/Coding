@@ -53,28 +53,34 @@ public class rightView{
         width( root.right, level + 1, maxMin );
     }
 
-    public static ArrayList<Node> rView( Node root )
+    public static ArrayList<pair> rView( Node root )
     {
-        ArrayList<Node> ans = new ArrayList<>();
+        ArrayList<pair> ans = new ArrayList<>();
         if( root == null ) return ans;
 
-        Queue<Node> qu = new LinkedList<>();
-        qu.add( root );    
+        int[] maxMin = new int[2];
+        width( root, 0, maxMin );
+
+        Queue<pair> qu = new LinkedList<>();
+        qu.add( new pair( root, -maxMin[1] ) );    
+        int level = 0;
 
         while( qu.size() != 0 )
         {
             int size = qu.size();
             while( size > 0 )
             {
-                Node vtx = qu.remove(); 
+                pair vtx = qu.remove(); 
 
-                if( vtx.left != null ) qu.add( vtx.left );
-                if( vtx.right != null ) qu.add( vtx.right );
+                if( level == ans.size() ) ans.add( vtx );
+                else if( vtx.v > ans.get(level).v ) ans.set( level, vtx );
 
-                if( size == 1 ) ans.add( vtx );
+                if( vtx.node.left != null ) qu.add( new pair( vtx.node.left, vtx.v - 1 ) );
+                if( vtx.node.right != null ) qu.add( new pair( vtx.node.right, vtx.v + 1 ) );
 
                 size--;
             }
+            level++;
         }
         return ans;
     }
@@ -84,9 +90,9 @@ public class rightView{
 
         Node root = constructTree( arr );
 
-        ArrayList<Node> ans = rView( root );
+        ArrayList<pair> ans = rView( root );
 
-        for( Node n : ans ) System.out.print( n.data + " " );
+        for( pair n : ans ) System.out.print( n.node.data + " " );
 
     }
 }
