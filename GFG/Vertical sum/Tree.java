@@ -29,7 +29,6 @@ class GfG {
         // Create the root of the tree
         Node root = new Node(Integer.parseInt(ip[0]));
         // Push the root to the queue
-        
         Queue<Node> queue = new LinkedList<>(); 
         
         queue.add(root);
