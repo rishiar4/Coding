@@ -44,18 +44,13 @@ public class Solution {
     return root;
   }
 
-  public static int size(Node node){
-      
-    if( node == null ) return 0;
+  public static int size(Node root ){
     
-    int s = 1;
+    int s = 0;
     
-    for( int i = 0; i < node.children.size(); i++ )
-    {
-        s += size( node.children.get(i) );
-    }
+    for( Node n : root.children ) s +=size( n );
     
-    return s;
+    return s + 1;
   }
 
   public static void main(String[] args) throws Exception {
