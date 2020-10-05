@@ -55,20 +55,13 @@ public class Solution {
     return s;
   }
 
-  public static int max(Node root) {
-    if( root == null )
-       return (int)-1e8;
+  public static int max(Node node) {
     
-    int maxAns = root.data;
-
-    for( int i = 0; i < root.children.size(); i++ )
-    {
-        int nextMax = max( root.children.get(i) );
-
-        if( nextMax > maxAns )
-            maxAns = nextMax;
-    }
-    return maxAns;
+    int myMax = node.data;
+    
+    for( Node n : node.children ) myMax = Math.max( myMax, max( n ) );
+    
+    return myMax;
   }
 
   public static void main(String[] args) throws Exception {
