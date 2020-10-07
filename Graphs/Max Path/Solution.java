@@ -50,13 +50,14 @@ public class Solution{
     }
 
     public static class pair{
-        int weight = 0;
         String path = "";
+        int weight = 0;
+        boolean isDestiHit = false;
 
-        pair( int weight, String path )
-        {
-            this.weight = weight;
+        pair(String path,int weight,boolean isDestiHit){
             this.path = path;
+            this.weight = weight;
+            this.isDestiHit = isDestiHit;
         }
     }
 
@@ -64,21 +65,22 @@ public class Solution{
     {
         if( src == des )
         {
-            return new pair( 0, src + "" );
+            return new pair(src + "",0,true);
         }
 
         vis[src] = true;
-        pair myAns = new pair( 0, "");
+        pair myAns = new pair("",0,false);
         
         for( Edge e : graph[src] )
         {
             if( vis[e.v] == false )
             {
                 pair recAns = maxPath( e.v, des, vis );
-                if( recAns.weight + e.w > myAns.weight )
+                if(recAns.isDestiHit &&  recAns.weight + e.w > myAns.weight )
                 {
                     myAns.weight = recAns.weight + e.w;
                     myAns.path = src + " " + recAns.path;
+                    myAns.isDestiHit = true;
                 }
             }
         }
