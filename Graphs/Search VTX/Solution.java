@@ -52,19 +52,19 @@ public class Solution{
 
     public static int searchVTX( int u, int v )
     {
-        for( int i = 0; i < graph[u].size(); i++ )
-        {
-            Edge e = graph[u].get(i);
-            if( e.v == v ) return i;
-        }
-        return -1;
+      for( int i = 0; i < graph[u].size(); i++ )
+      {
+          Edge e = graph[u].get(i);
+          if( e.v == v ) return i;
+      }   
+      return -1;
     }
 
 
     public static void main(String[] args) {
         
         constructGraph();
-
+        show();
         System.out.print( searchVTX( 3, 4 ) );
     }
 }
