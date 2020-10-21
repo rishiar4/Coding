@@ -74,12 +74,12 @@ public class Solution{
                     System.out.println( level );
                 }
                 
-                vis[vtx] = true;
                 
                 for( Edge e : graph[vtx] )
                 {
                     if( !vis[e.v] )
                     {
+                        vis[vtx] = true;
                         qu.add( e.v );
                     }
                 }
