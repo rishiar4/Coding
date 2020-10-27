@@ -11,10 +11,8 @@ public class Solution{
         }
         int k = scn.nextInt();
         int[] ans = printIndices( arr, 0 , k, 0 );
-        for(int i = 0; i < ans.length; i++ )
-        {
-        System.out.print( ans[i] + " " );
-        }
+        for( int ele : ans )
+            System.out.print( ele + " ");
     }
     
     public static int[] printIndices( int[] arr , int index, int k, int size )
