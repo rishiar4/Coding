@@ -30,8 +30,8 @@ public class Solution{
         
                 int minCost = (int)1e9;
                 for( int cut = si + 1; cut < ei; cut++ ){
-                    int lTree = MCM_MEM( arr, si, cut, dp );
-                    int rTree = MCM_MEM( arr, cut, ei, dp );
+                    int lTree = dp[si][cut]; // MCM_MEM( arr, si, cut, dp );
+                    int rTree = dp[cut][ei]; //MCM_MEM( arr, cut, ei, dp );
         
                     int cMultiplication = lTree + ( arr[si] * arr[cut] * arr[ei] ) + rTree;
                     minCost = Math.min( cMultiplication, minCost );
