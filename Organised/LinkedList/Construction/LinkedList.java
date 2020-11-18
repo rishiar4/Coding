@@ -1,18 +1,19 @@
 public class LinkedList{
-    protected class Node{
+    public class Node{
         int data = 0;
         Node next = null;
 
         Node( int data ){
             this.data = data;
+            this.next = null;
         }
     }
 
+    private int elementCount = 0;
     private Node head = null;
     private Node tail = null;
-    int elementCount = 0;
 
-    // Basic Functions
+    // Basic
 
     public int size(){
         return this.elementCount;
@@ -22,7 +23,7 @@ public class LinkedList{
         return this.elementCount == 0;
     }
 
-    @Override 
+    @Override
     public String toString(){
         Node curr = this.head;
         StringBuilder sb = new StringBuilder();
@@ -33,13 +34,12 @@ public class LinkedList{
             curr = curr.next;
         }
         sb.append(" ]");
-
         return sb.toString();
     }
 
     // Add
 
-    // AddFirst
+    // addFirst
     protected void addFirstNode( Node node ){
         if( this.head == null ){
             this.head = node;
@@ -49,16 +49,50 @@ public class LinkedList{
             this.head = node;
         }
     }
-
     public void addFirst( int data ){
         Node node = new Node( data );
         addFirstNode( node );
         this.elementCount++;
     }
 
-    // Remove
+    // addAt
+    protected void addAtNode( Node node, int idx ){
+        Node curr = this.head;
+        for( int i = 0; i < idx - 1; i++ ){
+            curr = curr.next;
+        }
+        Node nextNode = curr.next;
+        curr.next = node;
+        node.next = nextNode;
+    }
+    public void addAt( int data, int idx ) throws Exception{
+        if( idx < 0 || idx > this.elementCount ){
+            throw new Exception("Index out of Bounds: -1");
+        }
+        Node node = new Node( data );
+        addAtNode( node, idx );
+        this.elementCount++;
+    }
 
-    // RemoveFirst
+    // addLast
+    protected void addLastNode( Node node ){
+        if( this.head == null ){
+            this.head = null;
+            this.tail = null;
+        }else{
+            this.tail.next = node;
+            this.tail = node;
+        }
+    }
+    public void addLast( int data ){
+        Node node = new Node( data );
+        addLastNode( node );
+        this.elementCount++;
+    }
+
+    // Remove
+    
+    // removeFirst
     protected Node removeFirstNode(){
         Node node = this.head;
         if( this.elementCount == 1 ){
@@ -70,33 +104,113 @@ public class LinkedList{
         }
         return node;
     }
-
     public int removeFirst() throws Exception{
         if( this.elementCount == 0 ){
-            throw new Exception("Null Pointer Exception: -1 ");
-        }else{
-            Node rv = removeFirstNode();
-            this.elementCount--;
-            int rData = rv.data;
-            return rData;
+            throw new Exception("Null Pointer Exception: -1");
         }
+        Node rv = removeFirstNode();
+        this.elementCount--;
+        int data = rv.data;
+        return data;
     }
 
+    //removeLast
+    protected Node removeLastNode(){
+        Node node = this.tail;
+        if( this.elementCount == 1 ){
+            this.head = null;
+            this.tail = null;
+        }else{
+            Node curr = this.head;
+            for( int i = 0; i < this.elementCount-2; i++ ){
+                curr = curr.next;
+            }
+            curr.next = null;
+            return curr;
+        }
+        return node;
+    }
+    public int removeLast() throws Exception{
+        if( this.elementCount == 0 ){
+            throw new Exception("Null Pointer Exception: -1");
+        }
+        Node rv = removeLastNode();
+        this.elementCount--;
+        int data = rv.data;
+        return data;
+    }
+
+    // removeAt
+    // protected Node removeAtNode( int idx ){
+    //     if( idx == 0 ) return removeFirstNode();
+    //     else if( idx == this.elementCount ) return removeLastNode();
+    //     else{
+    //         Node prev = getNodeAt(idx - 1);
+    //         for( int i = 0; i < idx - 1; i++ ){
+    //             curr = curr.next;
+    //         }
+    //         Node curr = prev.next;
+
+    //         prev.next = curr.next;
+    //         curr.next = null;
+
+    //         return curr;
+    //     }
+    // }
+    // public int removeAt( int idx ) throws Exception{
+    //     if( idx < 0 || idx > this.elementCount ){
+    //         throw new Exception("Index out of Bounds: -1");
+    //     }
+    //     Node node = removeAtNode( idx );
+    //     this.elementCount--;
+    //     int data = node.data;
+    //     return data;
+    // }
 
     // Get
-    
+
     // getFirst
     protected Node getFirstNode(){
         return this.head;
     }
-
     public int getFirst() throws Exception{
         if( this.elementCount == 0 ){
             throw new Exception("Null Pointer Exception: -1");
-        }else{
-            Node rv = getFirstNode();
-            int data = rv.data;
-            return data;
         }
+        Node rv = getFirstNode();
+        int data = rv.data;
+        return data;
     }
+
+    // getAt
+    protected Node getAtNode( int idx ){
+        Node curr = this.head;
+        for( int i = 0; i < idx ; i++ ){
+            curr = curr.next;
+        }
+        return curr;
+    }
+    public int getAt( int idx ) throws Exception{
+        if( idx < 0 || idx > this.elementCount ){
+            throw new Exception("Index out of Bounds: -1");
+        }
+        Node rv = getAtNode( idx );
+        int data = rv.data;
+        return data;
+    }
+
+
+    // getLast
+    protected Node getLastNode(){
+        return this.tail;
+    }
+    public int getLast() throws Exception{
+        if( this.elementCount == 0 ){
+            throw new Exception("Null Pointer Exception: -1");
+        }
+        Node rv = getLastNode();
+        int data = rv.data;
+        return data;
+    }
+
 }

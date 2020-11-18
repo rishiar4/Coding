@@ -5,11 +5,25 @@ public class client{
         for( int i = 1; i <= 10; i++ ){
             ll.addFirst( i * 10 );
         }
-        System.out.println( ll );
-        for( int i = 0; i < 5; i++ ){
-            ll.removeFirst();
+
+        for( int i = 1; i <= 10; i++ ){
+            ll.addLast( - i * 10 );
         }
-        System.out.println( ll.getFirst() );
+
+
+        ll.addAt( -200, 2 );
+
+        System.out.println( ll );
+        // System.out.println( ll.getFirst() );
+        // System.out.println( ll.getLast() );
+        // System.out.println( ll.getAt( 3 ) );
+
+        // System.out.println( ll.removeFirst() );
+        // System.out.println( ll.removeLast() );
+        // System.out.println( ll.removeAt(2) );
+
+        // removeLast && removeAt 
+
         System.out.println( ll );
     }
 }
