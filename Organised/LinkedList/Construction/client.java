@@ -20,7 +20,9 @@ public class client{
 
         // System.out.println( ll.removeFirst() );
         // System.out.println( ll.removeLast() );
-        // System.out.println( ll.removeAt(2) );
+        // System.out.println( ll.removeLast() );
+        System.out.println( ll.removeAt( 2 ) );
+        // System.out.println( ll.removeAt( 20 ) );
 
         // removeLast && removeAt 
 
