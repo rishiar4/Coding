@@ -1,0 +1,3 @@
+public classs l001{
+    
+}
