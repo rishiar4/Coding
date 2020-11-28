@@ -98,7 +98,7 @@ public class l001{
 
     public static void solve(){
         int[] arr = { 10, 20, 30, -2, -3, -4, 5, 6, 7, 8, 9, 22, 11, 13 };
-        Heap pq = new Heap( arr );
+        Heap pq = new Heap( arr, false );
         
         pq.push( 50 );
         pq.push( 889 );
