@@ -16,6 +16,14 @@ public class l001{
             constructHeap( data );
         }
 
+        public int compareTo( int a, int b ){
+            if( this.isMax ){
+                return this.arr.get( a ) - this.arr.get( b );
+            }else{
+                return this.arr.get( b ) - this.arr.get( a );
+            }
+        }
+
         public void constructHeap( int[] data ){
             for( int ele : data ) this.arr.add( ele );
             int n = this.arr.size();
@@ -38,9 +46,9 @@ public class l001{
             int lci = 2 * pi + 1;
             int rci = 2 * pi + 2;
 
-            if( lci < this.arr.size() && this.arr.get( lci ) > this.arr.get( maxIdx ) )
+            if( lci < this.arr.size() && compareTo( lci, maxIdx ) > 0 )
                 maxIdx = lci;
-            if( rci < this.arr.size() && this.arr.get( rci ) > this.arr.get( maxIdx ) )
+            if( rci < this.arr.size() && compareTo( rci, maxIdx ) > 0 )
                 maxIdx = rci;
             
             if( pi != maxIdx ){
@@ -52,7 +60,7 @@ public class l001{
         public void upHeapify( int ci ){
             int pi = ( ci - 1 )/2;
 
-            if( pi >= 0 && this.arr.get( pi ) < this.arr.get( ci ) ){
+            if( pi >= 0 && compareTo( ci, pi ) > 0 ){
                 swap( pi, ci );
                 upHeapify( pi );
             }
