@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class l001{
 
     public static class Node{
@@ -48,12 +49,77 @@ public class l001{
         inOrder( root.right );
     }
 
+    public static void postOrder( Node root ){
+        if( root == null ) return;
+
+        postOrder( root.left );
+        postOrder( root.right );
+
+        System.out.print( root.data + " ");
+    }
+
+    public static void  preOrder( Node root ){
+        if( root == null ) return;
+
+        System.out.print( root.data + " ");
+        preOrder( root.left );
+        preOrder( root.right );
+
+    }
+
+    public static int size( Node root ){
+        return root == null ? 0 : size( root.left ) + size( root.right ) + 1;
+    }
+
+    public static int height( Node root ){
+        return root == null ? -1 : Math.max( height( root.left ), height( root.right ) ) + 1;
+    }
+
+    public static boolean find( Node root, int data ){
+        if( root == null ) return false;
+
+        if( root.data == data ) return true;
+
+        return find( root.left, data ) || find( root.right, data );
+
+    }
+
+    public static boolean nodeToRootPath( Node root, int data, ArrayList<Node> ans ){
+        if( root == null ){
+            return false;
+        }
+
+        if( root.data == data ){
+            ans.add( root );
+            return true;
+        }
+
+        boolean res = nodeToRootPath( root.left, data, ans ) || nodeToRootPath( root.right, data, ans );
+        if( res ){
+            ans.add( root );
+        }
+        return res;
+    }
+
     public static void main( String[] args ){
         int[] arr = { 10,20,40,-1,-1,50,80,-1,-1,90,-1,-1,30,60,100,-1,-1,-1,70,110,-1,-1,120,-1,-1 };
 
         Node root = constructTree( arr );
 
         display( root );
-        inOrder( root );
+
+        // inOrder( root );
+        // postOrder( root );
+        // preOrder( root );
+        // System.out.println( size( root ) );
+        // System.out.println( height( root ) );
+        // System.out.println( find( root, 110 ) );
+        ArrayList<Node> ans = new ArrayList<>();
+        nodeToRootPath( root, 110, ans );
+        for( Node nn : ans ){
+            System.out.print( nn.data + " ");
+        }
+
+
     }
 }
