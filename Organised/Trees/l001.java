@@ -82,14 +82,16 @@ public class l001{
     public static boolean nodeToRootPath( Node root, int data, ArrayList<Node> ans ){
         if( root == null ) return false;
 
-        if( root.data == data ) {
+        if( root.data == data ){
             ans.add( root );
             return true;
         }
 
         boolean res = nodeToRootPath( root.left, data, ans ) || nodeToRootPath( root.right, data, ans );
-        if( res ) ans.add( root );
-
+        if( res ){
+            ans.add( root );
+        }
+        
         return res;
     }
 
@@ -104,8 +106,9 @@ public class l001{
         ans.add( root );
         boolean res = rootToNodePath( root.left, data, ans ) || rootToNodePath( root.right, data, ans );
         if( !res ){
-            ans.remove( ans.size() - 1 );
+            ans.remove( ans.size() -  1 );
         }
+
         return res;
     }
 
@@ -123,12 +126,14 @@ public class l001{
         ArrayList<Node> ans = new ArrayList<>();
 
         nodeToRootPath( root, 120, ans );
-        // rootToNodePath( root, 120, ans );
+        // rootToNodePath( root, 80, ans );
+        
 
         for( Node nn : ans ){
             System.out.print( nn.data + " ");
         }
     }
+
     public static void main(String[] args) {
         solve();
     }
