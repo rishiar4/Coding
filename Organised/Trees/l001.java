@@ -11,26 +11,24 @@ public class l001{
     }
 
     static int idx = 0;
-    public static Node constructTre( int[] arr ){
-        if( idx >= arr.length || arr[idx] == -1 ){
+    public static Node constructTree( int[] arr ){
+        if( idx >= arr.length || arr[ idx ] == -1 ){
             idx++;
             return null;
         }
-
         Node node = new Node( arr[idx++] );
-        node.left = constructTre( arr );
-        node.right = constructTre( arr );
+        node.left = constructTree( arr );
+        node.right = constructTree( arr );
 
         return node;
     }
 
     public static void display( Node root ){
         if( root == null ) return;
-        
-        StringBuilder sb = new StringBuilder();
 
+        StringBuilder sb = new StringBuilder("");
         sb.append( root.left == null ? "." : root.left.data );
-        sb.append( " <--- " + root.data + " --> ");
+        sb.append( " <-- " + root.data + " --> ");
         sb.append( root.right == null ? "." : root.right.data );
 
         System.out.println( sb.toString() );
@@ -39,44 +37,22 @@ public class l001{
         display( root.right );
     }
 
-    public static void preOrder( Node root ){
-        if( root == null ) return;
-
-        System.out.print( root.data + " ");
-        preOrder( root.left );
-        preOrder( root.right );
-    }
-
-    public static void InOrder( Node root ){
-        if( root == null ) return;
-
-        InOrder( root.left );
-        System.out.print( root.data + " ");
-        InOrder( root.right );
-    }
-
-    public static void postOrder( Node root ){
-        if( root == null ) return;
-
-        postOrder( root.left );
-        postOrder( root.right );
-        System.out.print( root.data + " ");
-    }
-
     public static int size( Node root ){
-        return root == null ? 0: size( root.left ) + size( root.right ) + 1;
+        return root == null ? 0 : size( root.left ) + size( root.right ) + 1;
     }
 
     public static int height( Node root ){
-        return root == null ? -1 : Math.max( height( root.left ), height( root.right ) ) + 1;
+        return root == null ? -1 : Math.max( height(root.left) , height(root.right) ) + 1;
     }
-    
+
     public static boolean find( Node root, int data ){
         if( root == null ) return false;
 
         if( root.data == data ) return true;
 
-        return find( root.left, data ) || find( root.right, data );
+        boolean res = find( root.left, data ) || find( root.right, data ); 
+
+        return res;
     }
 
     public static boolean nodeToRootPath( Node root, int data, ArrayList<Node> ans ){
@@ -88,11 +64,18 @@ public class l001{
         }
 
         boolean res = nodeToRootPath( root.left, data, ans ) || nodeToRootPath( root.right, data, ans );
-        if( res ){
-            ans.add( root );
-        }
-        
+
+        if( res ) ans.add( root );
+
         return res;
+    }
+
+    public static void nodeToRootPath( Node root ){
+        ArrayList<Node> ans = new ArrayList<>();
+        nodeToRootPath( root, 120, ans );
+        for( Node node : ans ){
+            System.out.print( node.data + " ");
+        }
     }
 
     public static boolean rootToNodePath( Node root, int data, ArrayList<Node> ans ){
@@ -104,37 +87,94 @@ public class l001{
         }
 
         ans.add( root );
+
         boolean res = rootToNodePath( root.left, data, ans ) || rootToNodePath( root.right, data, ans );
         if( !res ){
-            ans.remove( ans.size() -  1 );
+            ans.remove( ans.size() - 1 );
         }
 
         return res;
     }
 
-    public static void solve(){
-        int[] arr = {10,20,40,-1,-1,50,80,-1,-1,90,-1,-1,30,60,100,-1,-1,-1,70,110,-1,-1,120,-1,-1};
-        Node root = constructTre( arr );
-        // display( root );
-        // preOrder( root );
-        // InOrder( root );
-        // postOrder( root );
-        // System.out.println( size( root ) );
-        // System.out.println( height(root) );
-        // System.out.println( find( root, 99 ) );
-        
+    public static void rootToNodePath( Node root ){
         ArrayList<Node> ans = new ArrayList<>();
-
-        nodeToRootPath( root, 120, ans );
-        // rootToNodePath( root, 80, ans );
-        
-
-        for( Node nn : ans ){
-            System.out.print( nn.data + " ");
+        rootToNodePath( root, 120, ans );
+        for( Node node : ans ){
+            System.out.print( node.data + " ");
         }
     }
 
+    public static int LCA( Node root, int data1, int data2 ){
+        if( root == null ) return 0;
+
+        ArrayList<Node> ans1 = new ArrayList<>();
+        ArrayList<Node> ans2 = new ArrayList<>();
+
+        nodeToRootPath( root, data1, ans1 );
+        nodeToRootPath( root, data2, ans2 );
+
+        int i = ans1.size() - 1;
+        int j = ans2.size() - 1;
+
+        Node LCA = null;
+        while( i >= 0 && j >= 0 ){
+            if( ans1.get(i) == ans2.get(j) ) LCA = ans1.get(i);
+
+            i--;
+            j--;
+        }
+
+        return LCA.data;
+    }
+
+    public static void kDown( Node root, Node block, int k, ArrayList<Integer> ans ){
+        if( root == null || root == block || k < 0 ) return;
+
+        if( k == 0 ){
+            ans.add( root.data );
+            return;
+        }
+
+        kDown( root.left, block, k - 1, ans );
+        kDown( root.right, block, k - 1, ans );
+    }
+
+    public static void kFar( Node root, int data, int k ){
+        ArrayList<Node> ans = new ArrayList<>();
+        nodeToRootPath( root, data, ans );
+
+        ArrayList<Integer> fAns = new ArrayList<>();
+
+        Node blockage = null;
+        for( int i = 0; i < ans.size(); i++ ){
+            kDown( ans.get(i), blockage, k - i, fAns );
+            blockage = ans.get(i);
+        }
+        System.out.println( fAns );
+    }
+    
+
+    public static void solve(){
+        int[] arr={10,20,40,-1,-1,50,80,-1,-1,90,-1,-1,30,60,100,-1,-1,-1,70,110,-1,-1,120,-1,-1};
+        Node root = constructTree( arr );
+        // display( root );
+        // System.out.println( size(root) );
+        // System.out.println( height(root) );
+        // System.out.println( find( root, 700) );
+        // nodeToRootPath( root );
+        // rootToNodePath( root );
+        // System.out.println( LCA( root, 40, 90 ) );
+        // ArrayList<Integer> ans = new ArrayList<>();
+        // kDown( root, null, 2, ans );
+        // System.out.println( ans );
+
+        kFar( root, 60, 3 );
+
+
+        // kDown( root, 10, )
+    }
     public static void main(String[] args) {
         solve();
+
     }
 }
