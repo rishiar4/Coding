@@ -152,7 +152,50 @@ public class l001{
         }
         System.out.println( fAns );
     }
-    
+
+    public static void kDown_( Node root, int k, Node blockage, ArrayList<Integer> ans ){
+        if( root == null || root == blockage || k < 0 ) return;
+
+        if( k == 0 ){
+            ans.add( root.data );
+            return;
+        }
+
+        kDown_( root.left, k - 1, blockage, ans );
+        kDown_( root.right, k - 1, blockage, ans );
+    }
+
+
+ 
+    public static int kFar2( Node root, int data, int k, ArrayList<Integer> ans ){
+        if( root == null ) return -1;
+
+        if( root.data == data ){
+            kDown_( root, k, null, ans );
+            return 1;
+        }
+
+        int lRes = kFar2( root.left, data, k, ans );
+        if( lRes != -1 ){
+            kDown_( root, k - lRes, root.left, ans );
+            return lRes + 1;
+        }
+        
+        int rRes = kFar2( root.right, data, k, ans );
+        if( rRes != -1 ){
+            kDown_( root, k - rRes, root.right, ans );
+            return rRes + 1;
+        }
+
+        return -1;
+    }
+
+
+    public static void kFar2( Node root ){
+        ArrayList<Integer> ans = new ArrayList<>();
+        kFar2( root, 60, 4, ans );
+        System.out.println( ans );
+    }
 
     public static void solve(){
         int[] arr={10,20,40,-1,-1,50,80,-1,-1,90,-1,-1,30,60,100,-1,-1,-1,70,110,-1,-1,120,-1,-1};
@@ -168,7 +211,9 @@ public class l001{
         // kDown( root, null, 2, ans );
         // System.out.println( ans );
 
-        kFar( root, 60, 3 );
+        // kFar( root, 60, 3 );
+        kFar2( root );
+
 
 
         // kDown( root, 10, )
