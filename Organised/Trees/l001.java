@@ -212,7 +212,9 @@ public class l001{
         // System.out.println( ans );
 
         // kFar( root, 60, 3 );
-        kFar2( root );
+        // kFar2( root );
+
+        
 
 
 
