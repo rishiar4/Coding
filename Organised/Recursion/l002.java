@@ -12,7 +12,7 @@ public class l002{
     // static String[] dirS = { "R", "D", "L", "U" };
 
     // static int[][] dir = { { -1, 0}, { -1, 1}, { 0, 1}, { 1, 1}, { 1, 0}, { 1, -1}, { 0, -1}, { -1, -1} };
-    // static String[] dirS = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
+    static String[] dirS = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
 
     public static int mazePath( int sr, int sc, int er, int ec, String ans ){
         if( sr == er - 1 && sc == ec - 1 ){
@@ -218,20 +218,48 @@ public class l002{
 
     }
 
-    public static void knightTour(){
-        int[][] board = new int[8][8];
-        for( int[] a : board ){
-            Arrays.fill( a, -1 );
+    static int[][] dir = { { 2, 1}, { 1, 2}, { -1, 2}, { -2, 1}, { -2, -1}, { -1,  -2}, { 1, -2}, { 2, -1} };
+
+    public static boolean knightTour( int[][] board, int sr, int sc, int steps ){
+        
+        if( steps == 64 ){
+            board[sr][sc] = steps;
+            return true;
+        }
+        
+        board[sr][sc] = steps;
+        int count = 0;
+        for( int d = 0; d < dir.length; d++ ){
+            int x = sr + dir[d][0];
+            int y = sc + dir[d][1];
+
+            if( x >= 0 && x < 8 && y >= 0 && y < 8 && board[x][y] == -1 ){
+                boolean res = knightTour( board, x, y, steps + 1 );
+                if( res ) return true;
+            }
         }
 
-        // knightTour( board, 0, 0, 0 );
-        
+        board[sr][sc] = -1;
+        return false;
+    }
+
+    public static void print( int[][] board ){
         for( int[] a : board ){
             for( int ele : a ){
                 System.out.print( ele + " ");
             }
             System.out.println();
         }
+    }
+    public static void knightTour(){
+        int[][] board = new int[8][8];
+        for( int[] a : board ){
+            Arrays.fill( a, -1 );
+        }
+
+        knightTour( board, 0, 0, 1 );
+
+        print( board );
     }
 
 
