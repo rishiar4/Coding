@@ -157,9 +157,111 @@ public class l001{
         return count;
     }
 
+    static String[] words = {":;/", "abc", "def", "ghi", "jkl", "mno","pqrs", "tuv", "wxyz", "&*%", "#@$"};
+
+    public static ArrayList<String> nokiaKeyPad_01( String ques, int idx ){
+        if( ques.length() == idx ){
+            ArrayList<String> baseAns = new ArrayList<>();
+            baseAns.add("");
+            return baseAns;
+        }
+
+        int chi = ques.charAt(idx) - '0';
+        String word = words[chi];
+        int count = 0;
+
+        ArrayList<String> recAns = nokiaKeyPad_01( ques, idx + 1 );
+        
+        ArrayList<String> myAns = new ArrayList<>();
+
+        for( String s : recAns ){
+            for( int i = 0; i < word.length(); i++ ){
+                myAns.add( s + word.charAt(i));
+            }
+        }
+        return myAns;
+    }
+
+    public static int nokiaKeyPad( String str, int idx, String ans ){
+        if( idx == str.length() ){
+            System.out.println( ans );
+            return 1;
+        }
+
+        int chi = str.charAt(idx) - '0';
+        String word = words[chi];
+        int count = 0;
+        
+        for( int i = 0; i < word.length(); i++ ){
+            count += nokiaKeyPad( str, idx + 1, ans + word.charAt(i) );
+        }
+
+        return count;
+    }
+
+    public static int nokiaKeyPad_02( String ques, int idx, String ans ){
+        if( ques.length() == idx ){
+            System.out.println( ans );
+            return 1;
+        }
+
+        int count = 0;
+        int chi = ques.charAt(idx) - '0';
+        String word = words[chi];
+
+        for( int i = 0; i < word.length(); i++ ){
+            count += nokiaKeyPad_02( ques, idx + 1, ans + word.charAt(i) );
+        }
+
+        if( idx < ques.length() - 1){
+            int num = chi * 10 + ( ques.charAt(idx) - '0' );
+            if( num >= 10 && num <= 11 ){
+                word = words[num];
+                for( int i = 0; i < word.length(); i++ ){
+                    count += nokiaKeyPad_02( ques, idx + 2, ans + word.charAt(i) );
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public static int encoding( String str, int idx, String ans ){
+
+        if( str.length() == idx ){
+            System.out.println( ans );
+            return 1;
+        }
+
+        int count = 0;
+        char ch = str.charAt(idx);
+        if( ch == '0') return 0;
+
+        count += encoding( str, idx + 1, ans + (char) ( ( ch - '0' ) + ('a' - 1 ) ) );
+
+        if( idx < str.length() - 1 ){
+            int ch2 = ( ch - '0' ) * 10 + ( str.charAt(idx + 1 ) - '0' );
+
+            if( ch2 >= 10 && ch2 <= 26 ){
+                count += encoding( str, idx + 2, ( ans + (char)( ch2 + ('a' - 1 ) ) ) );
+            }
+        }
+
+        return count;
+    }
+
     public static void set3(){
         // System.out.println( subsequence("abc", 0 ) );
-        subsequence( "abc", "" );
+        // subsequence( "abc", "" );
+        // System.out.println(nokiaKeyPad("346",0,""));
+        // System.out.println(nokiaKeyPad_01("346",0));
+
+        // System.out.println( nokiaKeyPad_02("346", 0, "")  );
+
+        // leetcode 91 Reference
+        // a = 0, b = 1, c = 2
+        System.out.println( encoding("226", 0, "") );
+
         
     }
 
