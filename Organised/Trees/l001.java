@@ -172,7 +172,7 @@ public class l001{
         }
 
         int rAns = kFar2( root.right, data, k, ans );
-        if( lAns != -1 ){
+        if( rAns != -1 ){
             kDown( root, root.right, k - rAns, ans );
             return rAns + 1;
         }
@@ -182,7 +182,7 @@ public class l001{
     public static void kFar( Node root){
         ArrayList<Node> ans = new ArrayList<>();
         // kFar( root, ans, 50, 5 );
-        kFar2( root, 30, 2, ans );
+        kFar2( root, 50, 2, ans );
 
         for( Node nn : ans ) System.out.print( nn.data + " " );
     }
@@ -242,8 +242,8 @@ public class l001{
         // Node LCA = LCA( root, 90, 80 );
         // System.out.println( "LCA ---> " + LCA.data );
 
-        // kFar( root );
+        kFar( root );
 
-        burningTree( root );
+        // burningTree( root );
     }
 }
