@@ -250,6 +250,21 @@ public class l001{
         return count;
     }
 
+    public static int permutation( String str, String ans ){
+        if( str.length() == 0 ){
+            System.out.println( ans );
+            return 1;
+        }
+
+        int count = 0;
+        for( int i = 0; i < str.length(); i++ ){
+            char ch = str.charAt( i );
+            String roq = str.substring( 0, i ) + str.substring( i + 1 );
+            count += permutation( roq, ans + ch );
+        }
+        return count;
+    }
+
     public static void set3(){
         // System.out.println( subsequence("abc", 0 ) );
         // subsequence( "abc", "" );
@@ -260,7 +275,9 @@ public class l001{
 
         // leetcode 91 Reference
         // a = 0, b = 1, c = 2
-        System.out.println( encoding("226", 0, "") );
+        // System.out.println( encoding("226", 0, "") );
+
+        System.out.println( permutation("abc", "") );
 
         
     }
