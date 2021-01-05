@@ -117,4 +117,32 @@ public class questions{
 
         return Math.max( nodetoLeafLeft, nodetoLeafRight  ) + node.data;
     }
+
+    // Flatten 
+    public static Node flatten_01( Node root ){
+        if( root == null || root.left == null || root.right == null ) return;
+
+        Queue<Node> qu = new LinkedList<>();
+        qu.add( root );
+
+        while( qu.size() != 0 ){
+            int size = qu.size();
+            while( size > 0 ){
+                Node vtx = qu.remove();
+
+                if( vtx.left != null ) qu.add( vtx.left );
+                if( vtx.right != null ) qu.add( vtx.right );
+
+                if( vtx.left != null ){
+                    vtx.left = vtx.right;
+                    vtx.right = vtx.left;
+                    vtx.left = null;
+                }
+
+                size--;
+            }
+        }
+    }
+
+    
 }

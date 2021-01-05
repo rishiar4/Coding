@@ -627,7 +627,63 @@ public class l001{
         // bottomView( root );
         // topView( root );
 
-        diagnalView( root );
+        // diagnalView( root );
+    }
+
+    public static class allSollPair{
+        Node prev  = null;
+        Node pred = null;
+        Node succ = null;
+
+        int ceil =  (int)1e8;
+        int floor = -(int)1e8;
+    }
+
+    public static void allSolution( Node root, int data, allSollPair ans ){
+        if( root == null ) return;
+
+        if( root.data > data ) ans.ceil = Math.min( ans.ceil, root.data );
+        if( root.data < data ) ans.floor = Math.max( ans.floor, root.data );
+
+        allSolution( root.left, data, ans );
+
+        if( root.data == data ){
+            ans.pred = ans.prev;
+        }
+        if( ans.prev != null && ans.prev.data == data ){
+            ans.succ = root;
+        }
+        ans.prev = root;
+
+        allSolution( root.right, data, ans );
+    }
+
+    public static void preSuccWays( Node root ){
+        allSollPair ans = new allSollPair();
+        allSolution( root, 80, ans );
+
+        System.out.println( ans.pred.data + " -- " + ans.succ.data + " -- " + ans.ceil + " -- " + ans.floor );
+    }
+
+    public static void inOrder( Node root ){
+        if( root == null ) return;
+
+        inOrder( root.left );
+
+        System.out.print( root.data + " ");
+
+        inOrder( root.right );
+    }
+
+    public static int tilt( Node root, int[] ans ){
+        if( root == null ) return 0;
+
+        int leftT = tilt( root.left, ans );
+        int rightT = tilt( root.right, ans );
+
+        ans[0] += Math.abs( leftT - rightT );
+
+        return leftT + rightT + root.data;
     }
     
     public static void main( String[] args ){
@@ -661,6 +717,12 @@ public class l001{
         // Diameter( root );
 
         // BFS( root );
-        Views( root );
+        // Views( root );
+        // inOrder( root );
+
+        // preSuccWays( root );
+        int[] ans = new int[1];
+        System.out.println( tilt(root, ans) );
+        System.out.println( ans[0] );
     }
 }
