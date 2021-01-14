@@ -143,6 +143,10 @@ public class l002{
 
     }
 
+    public static void print(){
+        
+    }
+
     public static void main(String[] args) {
         int[] arr = new int[20];
         for( int i = 0; i < arr.length; i++ ){
@@ -157,6 +161,6 @@ public class l002{
 
         // allSolution( root );
         // System.out.println( 35 ^ 35 ^ 67 ^ 52 ^67  );
-
+        print();
     }
 }
