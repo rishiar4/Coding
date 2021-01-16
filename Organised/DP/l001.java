@@ -55,9 +55,9 @@ public class l001{
     }
 
     public static void fib(){
-        int n = 11;
+        int n = 7;
         int[] dp = new int[ n + 1 ];
-        // System.out.println( fibR( n ) );
+        System.out.println( fibR( n ) );
         // System.out.println( fibM( n, dp ) );
         // print( dp );
         // System.out.println( fibDP( n, dp ) );
@@ -195,8 +195,8 @@ public class l001{
     }
 
     public static void mazePath(){
-        int n = 5; 
-        int m = 5;
+        int n = 4; 
+        int m = 4;
         int[][] dp = new int[ n ][ m ];
         // System.out.println( mazePath( 0, 0, n, m) );
         // System.out.println( mazePathM( 0, 0, n, m, dp) );
@@ -204,14 +204,15 @@ public class l001{
         // System.out.println( mazePathDP( 0, 0, n, m, dp) );
 
         // System.out.println( mazePathJ( 0, 0, n, m) );
-        // System.out.println( mazePathJ( 0, 0, n, m, dp) );
-        // print2D( dp );
+        System.out.println( mazePathJ( 0, 0, n, m, dp) );
+        print2D( dp );
         System.out.println( mazePathJDP( 0, 0, n, m, dp) );
     }
 
     public static void twoPointer(){
         // fib();
         mazePath();
+
     }
     public static void solve(){
         twoPointer();
