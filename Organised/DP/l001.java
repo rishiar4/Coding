@@ -209,10 +209,86 @@ public class l001{
         System.out.println( mazePathJDP( 0, 0, n, m, dp) );
     }
 
+    // ---------------- GoldMine ----------------
+
+    public static int goldMine( int[][] gold, int r, int c, int n, int m, int[][] dir){
+        if( c == m - 1 ){
+            return gold[r][c];
+        }
+
+        int maxValue = 0;
+        for( int d = 0; d < dir.length; d++){
+            int x = r + dir[d][0];
+            int y = c + dir[d][1];
+
+            if( x >= 0 && x < n && y >= 0 && y < m){
+                maxValue = Math.max( maxValue, goldMine( gold, x, y, n, m, dir) + gold[r][c] );
+            }
+        }
+        return maxValue;
+    }
+
+    public static int goldMine( int[][] gold, int r, int c, int n, int m, int[][] dir, int[][] dp){
+        if( c == m - 1 ){
+            return dp[r][c] = gold[r][c];
+        }
+
+        if( dp[r][c] != 0){
+            return dp[r][c];
+        }
+
+        int maxValue = 0;
+        for( int d = 0; d < dir.length; d++){
+            int x = r + dir[d][0];
+            int y = c + dir[d][1];
+
+            if( x >= 0 && x < n && y >= 0 && y < m){
+                maxValue = Math.max( maxValue, goldMine( gold, x, y, n, m, dir) + gold[r][c] );
+            }
+        }
+        return dp[r][c] = maxValue;
+    }
+
+    public static int goldMineDP( int[][] gold, int r, int c, int n, int m, int[][] dir, int[][] dp ){
+        return 0;
+    }
+
+    public static void goldMine(){
+        int[][] gold = {
+            {10, 33, 13, 15},
+            {22, 21, 04, 1},
+            {5, 0, 2, 3},
+            {0, 6, 14, 2}
+        };
+
+        int n = gold.length;
+        int m = gold[0].length;
+        int[][] dir = { { -1, 1}, { 0, 1}, { 1, 1} };
+
+        int maxValue = 0;
+        // for( int r = 0; r < n; r++){
+        //     maxValue = Math.max( maxValue, goldMine( gold, r, 0, n, m, dir) );
+        // }
+        
+        int[][] dp = new int[n][m];
+        for( int r = 0; r < n; r++){
+            maxValue = Math.max( maxValue, goldMine( gold, r, 0, n, m, dir, dp) );
+        }
+
+        // for( int r = 0; r < n; r++){
+        //     maxValue = Math.max( maxValue, goldMineDP( gold, r, 0, n, m, dir, dp) );
+        // }
+
+        System.out.println( maxValue );
+
+        print2D( dp );
+
+    }
+
     public static void twoPointer(){
         // fib();
-        mazePath();
-
+        // mazePath();
+        goldMine();
     }
     public static void solve(){
         twoPointer();
