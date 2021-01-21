@@ -249,8 +249,36 @@ public class l001{
         return dp[r][c] = maxValue;
     }
 
-    public static int goldMineDP( int[][] gold, int r, int c, int n, int m, int[][] dir, int[][] dp ){
-        return 0;
+    public static int goldMineDP( int[][] gold, int R, int C, int[][] dir, int[][] dp ){
+        int n = R;
+        int m = C;
+
+        for( int c = R - 1; c >= 0; c-- ){
+            for( int r = C - 1; r >= 0; r--){
+                if( c == m - 1 ){
+                    dp[r][c] = gold[r][c];
+                    continue;
+                }
+        
+                int maxValue = 0;
+                for( int d = 0; d < dir.length; d++){
+                    int x = r + dir[d][0];
+                    int y = c + dir[d][1];
+        
+                    if( x >= 0 && x < n && y >= 0 && y < m){
+                        maxValue = Math.max( maxValue, dp[x][y] + gold[r][c] );
+                    }
+                }
+                dp[r][c] = maxValue; 
+            }
+        }
+
+        int maxVal = 0;
+        for (int r = 0; r < n; r++){
+            maxVal = Math.max(maxVal, dp[r][0]);
+        }
+
+        return maxVal;
     }
 
     public static void goldMine(){
@@ -271,24 +299,26 @@ public class l001{
         // }
         
         int[][] dp = new int[n][m];
-        for( int r = 0; r < n; r++){
-            maxValue = Math.max( maxValue, goldMine( gold, r, 0, n, m, dir, dp) );
-        }
-
         // for( int r = 0; r < n; r++){
-        //     maxValue = Math.max( maxValue, goldMineDP( gold, r, 0, n, m, dir, dp) );
+        //     maxValue = Math.max( maxValue, goldMine( gold, r, 0, n, m, dir, dp) );
         // }
 
+        maxValue = goldMineDP( gold, n, m, dir, dp);
         System.out.println( maxValue );
 
-        print2D( dp );
+        // print2D( dp );
 
+    }
+
+    public static void friendsPairing(){
+        
     }
 
     public static void twoPointer(){
         // fib();
         // mazePath();
-        goldMine();
+        // goldMine();
+        friendsPairing();
     }
     public static void solve(){
         twoPointer();
