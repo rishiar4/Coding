@@ -242,4 +242,95 @@ public class questions{
         }
         return ans;
     }
+
+    // 70. Climbing Stairs
+    public int climbStairsR( int n){
+        if( n <= 1 )
+            return 1;
+
+        int val = climbStairsR( n - 1 ) + climbStairsR( n - 2 );
+
+        return val;
+    }
+
+    public int climbStairs( int n, int[] dp){
+        if( n <= 1 )
+            return dp[n] = 1;
+
+        if( dp[n] != 0)
+            return dp[n];
+
+        int val = climbStairs( n - 1, dp) + climbStairs( n - 2,dp );
+
+        return dp[n] = val;    
+    }
+
+    public int climbStairsDP( int N, int[] dp){
+        for( int n = 0; n <= N; n++){
+        if( n <= 1 ){
+            dp[n] = 1;
+            continue;
+        }
+        int val = climbStairs( n - 1, dp) + climbStairs( n - 2,dp );
+
+        dp[n] = val;  
+        }
+        return dp[N];
+    }
+
+    public int climbStairs(int n) {
+        // int ans = climbStairsR( n );
+        int[] dp = new int[ n + 1 ];
+        // int ans = climbStairs( n, dp);
+        int ans = climbStairsDP( n, dp);
+        return ans;
+    }
+
+    // 746. Min Cost Climbing Stairs
+    public int minCostClimbingStairs( int n, int[] cost){
+        if( n <= 1 )
+            return cost[n];
+        
+        int val = Math.min( minCostClimbingStairs( n - 1, cost), minCostClimbingStairs( n - 2, cost) );
+
+        return val + ( n < cost.length ? cost[n] : 0 );
+    }
+
+    public int minCostClimbingStairs( int n, int[] cost, int[] dp){
+        if( n <= 1)
+            return dp[n] = cost[n];
+
+        if( dp[n] != 0)
+            return dp[n];
+
+        int val = Math.min( minCostClimbingStairs( n - 1, cost, dp), minCostClimbingStairs( n - 2, cost, dp) );
+
+        return dp[n] = val + ( n < cost.length ? cost[n] : 0);
+    }
+
+    public int minCostClimbingStairsDP( int N, int[] cost, int[] dp){
+        for( int n = 0; n <= N; n++ ){
+        if( n <= 1){
+            dp[n] = cost[n];
+            continue;
+        }
+        int val = Math.min( dp[n-1], dp[n-2] );
+
+        dp[n] = val + ( n < cost.length ? cost[n] : 0); 
+        }
+        return dp[N];
+    }
+
+    public int minCostClimbingStairs(int[] cost) {
+        if( cost.length == 0 )
+            return 0;
+
+        int n = cost.length;
+        // int ans = minCostClimbingStairs( n, cost );
+        int[] dp = new int[ n + 1 ];
+        // int ans = minCostClimbingStairs( n, cost, dp);
+        int ans = minCostClimbingStairsDP( n, cost, dp);
+        return ans;
+    }
+
 }

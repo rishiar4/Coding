@@ -310,8 +310,55 @@ public class l001{
 
     }
 
+    public static int friendsPairing( int n ){
+        if( n <= 1 )    
+            return 1;
+
+        int single = friendsPairing( n - 1 );
+        int paired = friendsPairing( n - 2 ) * ( n - 1 );
+
+        return single + paired;
+    }
+
+    public static int friendsPairing( int n, int[] dp){
+        if( n <= 1 )
+            return dp[n] = 1;
+
+        if( dp[n] != 0 )
+            return dp[n];
+
+        int single = friendsPairing( n - 1, dp);
+        int paired = friendsPairing( n - 2, dp) * ( n - 1 );
+
+        return dp[n] = single + paired;
+    }
+
+    public static int friendsPairingDP( int N, int[] dp){
+        for( int n = 0; n <= N; n++){
+            if( n <= 1 ){
+                dp[n] = 1;
+                continue;
+            }
+
+            int single = dp[ n - 1 ]; //friendsPairing( n - 1, dp);
+            int paired = dp[ n - 2 ] * ( n - 1 ); //friendsPairing( n - 2, dp) * ( n - 1 );
+
+            dp[n] = single + paired;
+        }
+
+        return dp[ N ];
+    }
+
     public static void friendsPairing(){
-        
+        int n = 4;
+        // int ans = friendsPairing( n );
+        int[] dp = new int[ n + 1 ];
+        // int ans = friendsPairing( n, dp);
+        int ans = friendsPairingDP( n, dp);
+
+        System.out.println( ans );
+
+        // print( dp );
     }
 
     public static void twoPointer(){
