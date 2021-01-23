@@ -365,7 +365,8 @@ public class l001{
         // fib();
         // mazePath();
         // goldMine();
-        friendsPairing();
+        // friendsPairing();
+        
     }
     public static void solve(){
         twoPointer();
