@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 public class l001{
     
     public static void print( int[] arr ){
@@ -361,12 +362,84 @@ public class l001{
         // print( dp );
     }
 
+    public static int boardPath( int sp, int ep){
+        if( sp == ep){
+            return 1;
+        }
+        int count = 0;
+        for( int dice = 1; dice <= 6 && sp + dice <= ep; dice++){
+            count += boardPath( sp + dice, ep);
+        }
+
+        return count;
+    }
+
+    public static int boardPath( int sp, int ep, int[] dp){
+        if( sp == ep){
+            return dp[sp] = 1;
+        }
+
+        if( dp[sp] != 0)
+            return dp[sp];
+        
+        int count = 0;
+        for( int dice = 1; dice <= 6 && sp + dice <= ep; dice++){
+            count += boardPath( sp + dice, ep, dp);
+        }
+
+        return dp[sp] = count;
+    }
+
+    public static int boardPathDP( int SP, int ep, int[] dp){
+        for( int sp = ep; sp >= 0; sp--){
+            if( sp == ep){
+                dp[sp] = 1;
+                continue;
+            }
+            
+            int count = 0;
+            for( int dice = 1; dice <= 6 && sp + dice <= ep; dice++){
+                count += dp[ sp + dice ];
+            }
+    
+            dp[sp] = count;
+        }
+        return dp[SP];
+    }
+
+    public static int boardPathOPTI( int n ){
+        LinkedList<Integer> ll = new LinkedList<>();
+
+        for( int sp = n; sp >= 0; sp--){
+            
+            if( ll.size() <= 1 )
+                ll.addFirst( 1 );
+            else if( ll.size() <= 6)
+                ll.addFirst( 2 * ll.getFirst() );
+            else
+                ll.addFirst( 2 * ll.getFirst() - ll.removeLast() );
+        }
+
+        return ll.removeLast();
+    }
+
+    public static void boardPath(){
+        int sp = 0, ep = 10;
+        // int ans = boardPath( sp, ep );
+        int[] dp = new int[ ep + 1 ];
+        // int ans = boardPath( sp, ep, dp);
+        // print( dp );
+        // int ans = boardPathDP( sp, ep, dp);
+        int ans = boardPathOPTI( ep );
+        System.out.println( ans );
+    }
+
     public static void twoPointer(){
         // fib();
         // mazePath();
         // goldMine();
-        // friendsPairing();
-        
+        friendsPairing();
+        // boardPath();
     }
     public static void solve(){
         twoPointer();
