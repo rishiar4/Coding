@@ -333,4 +333,185 @@ public class questions{
         return ans;
     }
 
+    // 91. Decode Ways
+    public int numDecodings( String s, int idx){
+        if( idx == s.length() ){
+            return 1;
+        }
+
+        int count = 0;
+
+        if( s.charAt(idx) == '0'){
+            return 0;
+        }
+
+        count += numDecodings( s, idx + 1);
+
+        if( idx < s.length() - 1){
+            int num1 = s.charAt( idx ) - '0';
+            int num2 = s.charAt( idx + 1 ) - '0';
+            
+            int num = num1 * 10 + num2;
+            if( num <= 26){
+                count += numDecodings( s, idx + 2);
+            }
+        }
+
+        return count;
+    }
+
+    public int numDecodings( String s, int idx, int[] dp){
+        if( idx == s.length() ){
+            return dp[idx] = 1;
+        }
+
+        if( dp[idx] != -1){
+            return dp[idx];
+        }
+        
+        int count = 0;
+
+        if( s.charAt(idx) == '0'){
+            return dp[idx] = 0;
+        }
+
+        count += numDecodings( s, idx + 1, dp);
+
+        if( idx < s.length() - 1){
+            int num1 = s.charAt( idx ) - '0';
+            int num2 = s.charAt( idx + 1 ) - '0';
+            
+            int num = num1 * 10 + num2;
+            if( num <= 26){
+                count += numDecodings( s, idx + 2, dp);
+            }
+        }
+
+        return dp[idx] = count;   
+    }
+
+    public int numDecodingsDP( String s, int IDX, int[] dp){
+        for( int idx = s.length(); idx >= 0; idx--){
+            if( idx == s.length() ){
+                dp[idx] = 1;
+                continue;
+            }
+            
+            int count = 0;
+    
+            if( s.charAt(idx) == '0'){
+                dp[idx] = 0;
+                continue;
+            }
+    
+            count += dp[idx+1];//numDecodings( s, idx + 1, dp);
+    
+            if( idx < s.length() - 1){
+                int num1 = s.charAt( idx ) - '0';
+                int num2 = s.charAt( idx + 1 ) - '0';
+                
+                int num = num1 * 10 + num2;
+                if( num <= 26){
+                    count += dp[idx+2]; //numDecodings( s, idx + 2, dp);
+                }
+            }
+    
+            dp[idx] = count;  
+        }
+        return dp[IDX];
+    }
+
+    public int numDecodingsOpti( String s, int idx){
+
+        int a = 1;
+        int b = 0;
+
+        for (int idx = s.length() - 1; idx >= 0; idx--)
+        {
+            int sum = 0;
+            char ch = s[idx];
+            if (ch == '0')
+                sum = 0;
+            else
+            {
+                sum = a;
+                if (idx < s.length() - 1)
+                {
+                    int num = (s[idx] - '0') * 10 + (s[idx + 1] - '0');
+                    if (num <= 26)
+                        sum += b;
+                }
+            }
+    
+            b = a;
+            a = sum;
+        }
+    
+        return a; 
+    }
+
+    public int numDecodings(String s) {
+        int n = s.length();
+        if( n == 0 )
+            return 0;
+        
+        // int ans = numDecodings( s, 0);
+        int[] dp = new int[ n + 1 ];
+        Arrays.fill( dp, -1);
+        // int ans = numDecodings( s, 0, dp);
+        // int ans = numDecodingsDP( s, 0, dp);
+        int ans = numDecodingsOpti( s, 0);
+        return ans;
+    }
+
+    // 639. Decode Ways II
+    static int mod = (int)1e9 + 7;
+
+    public long numDecodings( String s, int idx){
+        if( idx == s.length()){
+            return 1;
+        }
+
+        if( s.charAt(idx) == 0){
+            return 0;
+        }
+
+        if( dp[idx] != -1)
+            return dp[idx];
+        long count = 0;
+
+        if (s.charAt(idx) == '*'){
+            count = (count + 9 * numDecodings(s, idx + 1, dp) % mod) % mod;
+            if (idx < s.length() - 1 && s.charAt( idx + 1 ) >= '0' && s.charAt( idx + 1 ) <= '6')
+                count = (count + 2 * numDecodings(s, idx + 2, dp) % mod) % mod;
+            else if (idx < s.length() - 1 && s.charAt( idx + 1 ) >= '7')
+                count = (count + numDecodings(s, idx + 2, dp) % mod) % mod;
+            else if (idx < s.length() - 1 && s.charAt( idx + 1 ) == '*')
+                count = (count + 15 * numDecodings(s, idx + 2, dp) % mod) % mod;
+        }else{
+            count = (count + numDecodings(s, idx + 1, dp) % mod) % mod;
+            if (idx < s.length() - 1 && s.charAt( idx + 1 ) == '*'){
+                if (ch == '1')
+                    count = (count + 9 * numDecodings(s, idx + 2, dp) % mod) % mod;
+                else if (ch == '2')
+                    count = (count + 6 * numDecodings(s, idx + 2, dp) % mod) % mod;
+            }else if (idx < s.length() - 1){
+                int num = (ch - '0') * 10 + (s.charAt( idx + 1 ) - '0');
+                if (num <= 26)
+                    count = (count + numDecodings(s, idx + 2, dp) % mod) % mod;
+            }
+        }
+        return dp[idx] = count;
+    }
+
+    public int numDecodings(String s) {
+        int n = s.length();
+        if( n == 0 )
+            return 0;
+        int[] dp = new int[ n + 1];
+        Arrays.fill( dp, -1);
+        return (int)numDecodings( s, 0, dp);
+    }
+
+
 }
