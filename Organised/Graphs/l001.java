@@ -10,23 +10,39 @@ public class l001{
         }
     }
 
-    static int N = 7;
+    static int N = 7;  
+    
     @SuppressWarnings("unchecked")
     static ArrayList<Edge>[] graph = new ArrayList[N];
 
     public static void addEdge( int u, int v, int w){
-        graph[v].add( new Edge(u,w));
-        graph[u].add( new Edge(v,w));
+        graph[u].add( new Edge(v, w));
+        graph[v].add( new Edge(u, w));
     }
 
     public static void display(){
         for( int i = 0; i < N; i++){
-            System.out.print( i + " --> " );
+            System.out.print( i + " --> ");
             for( Edge e : graph[i]){
-                System.out.print( "( " +  e.v + ", " + e.w + " ) , ");
+                System.out.print( "( " + e.v + ", " + e.w + " ) " );
             }
             System.out.println();
         }
+    }
+
+    public static void constructGraph(){
+        for( int i = 0; i < N; i++){
+            graph[i] = new ArrayList<Edge>();
+        }
+
+        addEdge( 0, 1, 10);
+        addEdge( 0, 3, 10);
+        addEdge( 1, 2, 10);
+        addEdge( 3, 2, 40);
+        addEdge( 3, 4, 2);
+        addEdge( 4, 5, 2);
+        addEdge( 4, 6, 8);
+        addEdge( 6, 5, 3);
     }
 
     public static int searchVtx( int u, int v){
@@ -35,7 +51,6 @@ public class l001{
             Edge e = graph[u].get(i);
             if( e.v == v){
                 idx = i;
-                break;
             }
         }
         return idx;
@@ -43,18 +58,16 @@ public class l001{
 
     public static void removeEdge( int u, int v){
         int l1 = searchVtx( u, v);
-        if( l1 != -1)
-            graph[u].remove(l1);
-        
+        graph[u].remove(l1);
+
         int l2 = searchVtx( v, u);
-        if( l2 != -1)
-            graph[v].remove(l2);
+        graph[v].remove(l2);
     }
 
-    public static void removeVtx( int u){
-        for( int i = graph[u].size() - 1; i >= 0; i--){
-            Edge e = graph[u].get(i);
-            removeEdge( u, e.v );
+    public static void removeVtx( int v){
+        for( int i = graph[v].size() - 1; i >= 0; i--){
+            Edge e = graph[v].get(i);
+            removeEdge( v, e.v);
         }
     }
 
@@ -65,16 +78,15 @@ public class l001{
         vis[src] = true;
         boolean res = false;
         for( Edge e : graph[src]){
-            if( !vis[e.v] ){
+            if( vis[e.v] == false){
                 res = res || hasPath( e.v, des, vis);
             }
         }
-
         return res;
     }
 
-    public static int printAllPath( int src, int des, boolean[] vis, String psf, int wsf){
-        if( src == des){
+    public static int allPath( int src, int des, boolean[] vis, String psf, int wsf){
+        if( src == des ){
             System.out.println( psf + src + " @ " + wsf);
             return 1;
         }
@@ -82,8 +94,8 @@ public class l001{
         vis[src] = true;
         int count = 0;
         for( Edge e : graph[src]){
-            if( vis[e.v] == false){
-                count += printAllPath( e.v, des, vis, psf + src + " ", wsf + e.w);
+            if( !vis[e.v]){
+                count += allPath( e.v, des, vis, psf + src + " ", wsf + e.w);
             }
         }
 
@@ -92,21 +104,12 @@ public class l001{
     }
 
     public static void main(String[] args) {
-        for(int i = 0;i<N;i++) graph[i] = new ArrayList<Edge>();
-
-        addEdge(0,1,10);
-        addEdge(0,3,10);
-        addEdge(1,2,10);
-        addEdge(2,3,40);
-        addEdge(3,4,2);
-        addEdge(4,5,2);
-        addEdge(4,6,8);
-        addEdge(5,6,3);
-
+        constructGraph();
+        // removeEdge( 3, 4);
+        // removeVtx( 3 );
         display();
-
-        // System.out.println( hasPath( 0, 7, new boolean[N]) );
-
-        System.out.println( printAllPath( 0, 6, new boolean[N], "", 0) );
+        boolean[] vis = new boolean[N];
+        // System.out.println( hasPath( 0, 6, vis));
+        System.out.println( allPath( 0, 6, vis, "", 0) );
     }
 }
