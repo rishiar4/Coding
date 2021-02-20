@@ -11,7 +11,7 @@ public class l001{
     }
 
     static int N = 7;  
-    
+
     @SuppressWarnings("unchecked")
     static ArrayList<Edge>[] graph = new ArrayList[N];
 
@@ -103,6 +103,36 @@ public class l001{
         return count;
     }
 
+    public static class pair{
+        int weight = 0;
+        String path = "";
+
+        pair( int weight, String path){
+            this.weight = weight;
+            this.path = path;
+        }
+    }
+
+    public static pair maxWeightPath( int src, int des, boolean[] vis){
+        if( src == des){
+            return new pair(0, des + "");
+        }
+
+        vis[src] = true;
+        pair myAns = new pair(-(int)1e8, "");
+        for( Edge e : graph[src]){
+            if( vis[e.v] == false){
+                pair recAns = maxWeightPath( e.v, des, vis);
+                if( recAns.weight + e.w > myAns.weight){
+                    myAns.weight = recAns.weight + e.w;
+                    myAns.path = src + " " + recAns.path;
+                }
+            }
+        }
+        vis[src] = false;
+        return myAns;
+    }
+
     public static void main(String[] args) {
         constructGraph();
         // removeEdge( 3, 4);
@@ -111,5 +141,7 @@ public class l001{
         boolean[] vis = new boolean[N];
         // System.out.println( hasPath( 0, 6, vis));
         System.out.println( allPath( 0, 6, vis, "", 0) );
+        pair ans = maxWeightPath( 0, 6, vis);
+        System.out.println( ans.path + " @ " + ans.weight);
     }
 }
