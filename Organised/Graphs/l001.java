@@ -115,13 +115,13 @@ public class l001{
 
     public static pair maxWeightPath( int src, int des, boolean[] vis){
         if( src == des){
-            return new pair(0, des + "");
+            return new pair( 0, des + "");
         }
 
         vis[src] = true;
         pair myAns = new pair(-(int)1e8, "");
         for( Edge e : graph[src]){
-            if( vis[e.v] == false){
+            if( !vis[e.v] ){
                 pair recAns = maxWeightPath( e.v, des, vis);
                 if( recAns.weight + e.w > myAns.weight){
                     myAns.weight = recAns.weight + e.w;
@@ -129,6 +129,7 @@ public class l001{
                 }
             }
         }
+
         vis[src] = false;
         return myAns;
     }
