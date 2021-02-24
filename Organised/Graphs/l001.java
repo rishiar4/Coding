@@ -134,15 +134,30 @@ public class l001{
         return myAns;
     }
 
+    public static int hamilitonian( int src, int osrc, int tEdges, boolean[] vis, String psf){
+
+        vis[src] = true;
+        int count = 0;
+        for( Edge e : graph[src]){
+            if( vis[e.v] == false){
+                count += hamilitonian( )
+            }
+        }
+        vis[src] = false;
+        return count;
+    }
+
     public static void main(String[] args) {
         constructGraph();
         // removeEdge( 3, 4);
         // removeVtx( 3 );
-        display();
+        // display();
         boolean[] vis = new boolean[N];
         // System.out.println( hasPath( 0, 6, vis));
-        System.out.println( allPath( 0, 6, vis, "", 0) );
-        pair ans = maxWeightPath( 0, 6, vis);
-        System.out.println( ans.path + " @ " + ans.weight);
+        // System.out.println( allPath( 0, 6, vis, "", 0) );
+        // pair ans = maxWeightPath( 0, 6, vis);
+        // System.out.println( ans.path + " @ " + ans.weight);
+
+        System.out.println( hamilitonian(0, 0, 0, vis, "") );
     }
 }
