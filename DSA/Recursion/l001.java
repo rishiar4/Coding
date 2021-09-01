@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 public class l001{
     public static void printIncreasing(int a, int b){
         if( a > b ){
@@ -279,6 +280,104 @@ public class l001{
 
     }
 
+    public static int mazePath_HVD_Multiple( int sr, int sc, int dr, int dc, int[][] dir, String[] dirS, String psf){
+        if( sr == dr && sc == dc){
+            System.out.println( psf );
+            return 1;
+        }
+
+        int count = 0;
+
+        for( int jump = 1; jump < Math.max( dr, dc); jump++ ){
+            for( int d = 0; d < dir.length; d++){
+                int x = sr + jump * dir[d][0];
+                int y = sc + jump * dir[d][1];
+
+                if( x >= 0 && x <= dr && y >= 0 && y <= dc ){
+                    count += mazePath_HVD_Multiple( x, y, dr, dc, dir, dirS, psf + dirS[d] + jump);
+                }
+            }
+        }
+        return count;
+    }
+
+    public static int mazePath_HVD( int sr, int sc, int dr, int dc, int[][] dir, String[] dirS, ArrayList<String> ans, String psf){
+        if( sr == dr && sc == dc){
+            ans.add( psf );
+            return 1;
+        }
+
+        int count = 0;
+        for( int d = 0; d < dir.length; d++ ){
+            int x = sr + dir[d][0];
+            int y = sc + dir[d][1];
+
+            if( x >= 0 && x <= dr && y >= 0 && y <= dc )
+                count += mazePath_HVD( x, y, dr, dc, dir, dirS, ans, psf + dirS[d]);
+        }
+
+        return count;
+    }
+
+    public static int mazePath_HVD_Multiple( int sr, int sc, int dr, int dc, int[][] dir, String[] dirS, ArrayList<String> ans, String psf){
+        if( sr == dr && sc == dc){
+            ans.add( psf );
+            return 1;
+        }
+
+        int count = 0;
+        for( int jump = 1; jump <= Math.max( dr, dc); jump++ ){
+            for( int d = 0; d < dir.length; d++){
+                int x = sr + jump * dir[d][0];
+                int y = sc + jump * dir[d][1];
+
+                if( x >= 0 && y >= 0 && x <= dr && y <= dc )
+                    count += mazePath_HVD_Multiple( x, y, dr, dc, dir, dirS, ans, psf + dirS[d] + jump );
+            }
+        }
+
+        return count;
+    }
+
+    public static boolean knightTour( int[][] board, int sr, int sc, int steps, int[][] dir){
+        board[sr][sc] = steps;
+        if( steps == board.length * board[0].length - 1){
+            return true;
+        }
+
+        for( int d = 0; d < dir.length; d++ ){
+            int x = sr + dir[d][0];
+            int y = sc + dir[d][1];
+
+            if( x >= 0 && y >= 0 && x < board.length && y < board[0].length && board[x][y] == -1 ){
+                boolean res = knightTour( board, x, y, steps+1, dir);
+                if( res ) return true;
+            }
+        }
+
+        board[sr][sc] = -1;
+        return false;
+    }
+
+    public static void knight(){
+        int[][] board = new int[8][8];
+        for( int[] a : board ) 
+            Arrays.fill( a, -1);
+
+        int[][] dir = { {-2,1}, {-1,2}, {1,2}, {2,1}, {2,-1}, {1,-2}, {-1,-2}, {-2,-1} };
+        
+        knightTour( board, 0, 0, 0, dir);
+        for( int[] a : board){
+            for( int ele : a ){
+                System.out.print( ele +  " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void floodFill(){
+        
+    }
 
 
 
@@ -292,6 +391,12 @@ public class l001{
         String[] dirS = { "V", "D", "H"};
         // System.out.println( mazePath_HVD( sr, sc, n, m, dir, dirS, "") );
         // System.out.println( mazePath_HVD_Multiple( sr, sc, n, m, dir, dirS, "") );
+        // ArrayList<String> ans = new ArrayList<>();
+        // System.out.println( mazePath_HVD( sr, sc, n, m, dir, dirS, ans, "") );
+        // System.out.println( mazePath_HVD_Multiple( sr, sc, n, m, dir, dirS, ans, "") );
+        // System.out.println( ans );
+        // knight();
+        floodFill();
     }
 
     public static void main( String[] args ){
